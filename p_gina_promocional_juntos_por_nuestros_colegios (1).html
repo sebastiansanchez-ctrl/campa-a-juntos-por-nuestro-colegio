@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juntos por Nuestros Colegios - Pequeños aportes, grandes cambios</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Montserrat / Inter + Caveat for handwritten notes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            DEFAULT: '#0B1C33',
+                            dark: '#081426',
+                            light: '#162C4E',
+                        },
+                        brandYellow: {
+                            DEFAULT: '#FFCC29',
+                            hover: '#EBB816',
+                            light: '#FFF8DD',
+                            soft: '#FEF0B8'
+                        },
+                        sectionBg: '#EEF4FA',
+                        cardBg: '#FFFFFF',
+                        textPrimary: '#1E293B',
+                        textSecondary: '#475569'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        hand: ['"Caveat"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .handwritten {
+            font-family: 'Caveat', cursive;
+        }
+        .polaroid-frame {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            transform: rotate(2.5deg);
+            transition: transform 0.3s ease;
+        }
+        .polaroid-frame:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        .yellow-tag {
+            background-color: #FFCC29;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: rotate(-3.5deg);
+        }
+        .yellow-sticky {
+            background-color: #FFEC94;
+            box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
+            transform: rotate(3deg);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="font-sans bg-white text-textPrimary antialiased selection:bg-brandYellow selection:text-navy custom-scrollbar">
+
+    <!-- HEADER BAR -->
+    <header class="bg-navy sticky top-0 z-40 shadow-lg border-b border-navy-light/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="relative w-11 h-11 flex items-center justify-center bg-white/10 rounded-xl group-hover:bg-white/20 transition-all">
+                    <!-- Icon SVG resembling book + heart -->
+                    <svg class="w-8 h-8 text-brandYellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9.5a2 2 0 013.414-1.414l.086.086.086-.086A2 2 0 0119 10.914l-7 7-7-7a2 2 0 012.828-2.828l.086.086.086-.086A2 2 0 0112 9.5z" class="fill-brandYellow stroke-navy"></path>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-white font-extrabold text-lg leading-tight tracking-tight">Juntos por <br class="hidden sm:inline"><span class="text-white">Nuestros Colegios</span></span>
+                    <span class="text-gray-300 text-[11px] font-medium tracking-wide">Pequeños aportes, grandes cambios</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Menu -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
+                <a href="#inicio" class="relative py-1 border-b-2 border-brandYellow font-semibold text-white">Inicio</a>
+                <a href="#campana" class="hover:text-brandYellow transition-colors">La campaña</a>
+                <a href="#necesidades" class="hover:text-brandYellow transition-colors">Necesidades</a>
+                <a href="#como-ayudar" class="hover:text-brandYellow transition-colors">Cómo ayudar</a>
+                <a href="#contacto" class="hover:text-brandYellow transition-colors">Contacto</a>
+            </nav>
+
+            <!-- Main CTA Button & Mobile Menu Toggle -->
+            <div class="flex items-center space-x-3">
+                <button onclick="openDonateModal()" class="bg-brandYellow hover:bg-brandYellow-hover text-navy font-bold px-5 py-2.5 rounded-full text-sm flex items-center gap-2 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+                    <i class="fa-solid fa-heart text-navy"></i>
+                    <span>Dona ahora</span>
+                </button>
+                
+                <button onclick="toggleMobileMenu()" class="md:hidden text-white p-2 focus:outline-none" aria-label="Abrir Menú">
+                    <i id="menuIcon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-navy-dark border-t border-navy-light px-4 pt-3 pb-6 space-y-3 text-white text-sm">
+            <a href="#inicio" onclick="toggleMobileMenu()" class="block py-2 text-brandYellow font-semibold">Inicio</a>
+            <a href="#campana" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandYellow">La campaña</a>
+            <a href="#necesidades" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandYellow">Necesidades</a>
+            <a href="#como-ayudar" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandYellow">Cómo ayudar</a>
+            <a href="#contacto" onclick="toggleMobileMenu()" class="block py-2 hover:text-brandYellow">Contacto</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative bg-navy text-white min-h-[580px] lg:min-h-[640px] flex items-center overflow-hidden">
+        <!-- Background classroom image with overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1920&q=80" 
+                 alt="Sala de clases" 
+                 class="w-full h-full object-cover object-center opacity-30 mix-blend-luminosity">
+            <div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Left Content Area -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-block">
+                        <span class="text-xs font-bold tracking-widest text-brandYellow uppercase bg-brandYellow/10 px-3 py-1 rounded-md border border-brandYellow/30">
+                            RECAUDACIÓN DE FONDOS
+                        </span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] font-extrabold leading-[1.15] text-white">
+                        La educación también <br class="hidden sm:inline">
+                        se construye con calor, <br class="hidden sm:inline">
+                        recursos y 
+                        <span class="relative text-brandYellow inline-block">
+                            oportunidades
+                            <svg class="absolute -bottom-2 left-0 w-full h-3 text-brandYellow" viewBox="0 0 200 12" fill="none">
+                                <path d="M2 8C50 2 150 2 198 8" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </h1>
+
+                    <p class="text-gray-200 text-base sm:text-lg max-w-xl font-normal leading-relaxed pt-2">
+                        En muchos colegios y liceos de nuestro país, los recursos no alcanzan para cubrir todas las necesidades. Por eso, <strong class="font-bold text-white">¡necesitamos tu ayuda!</strong>
+                    </p>
+
+                    <!-- Buttons group -->
+                    <div class="pt-4 flex flex-wrap items-center gap-4">
+                        <button onclick="openDonateModal()" class="bg-brandYellow hover:bg-brandYellow-hover text-navy font-extrabold px-8 py-3.5 rounded-full text-base flex items-center gap-3 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1">
+                            <i class="fa-solid fa-heart text-navy text-lg"></i>
+                            <span>Dona ahora</span>
+                        </button>
+
+                        <button onclick="openShareModal()" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3.5 rounded-full text-base border border-white/40 backdrop-blur-sm flex items-center gap-3 transition-all hover:border-white">
+                            <i class="fa-solid fa-share-nodes text-lg"></i>
+                            <span>Comparte esta campaña</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Visual Elements Area -->
+                <div class="lg:col-span-5 relative mt-8 lg:mt-0 flex flex-col items-center justify-center">
+                    <!-- Classroom Heater Graphic Overlay Showcase -->
+                    <div class="relative w-full max-w-md">
+                        <!-- Chalkboard handwriting style overlay -->
+                        <div class="absolute -top-12 sm:-top-16 right-2 sm:-right-4 text-white text-right z-20 pointer-events-none">
+                            <p class="handwritten text-2xl sm:text-3xl font-bold text-teal-200 leading-tight drop-shadow-md">
+                                Mejores condiciones,<br> más aprendizaje ♡
+                            </p>
+                        </div>
+
+                        <!-- Main Image Container: Electric Heater in classroom -->
+                        <div class="relative rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl bg-navy-light">
+                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" 
+                                 alt="Estudiantes en sala de clases" 
+                                 class="w-full h-72 sm:h-80 object-cover">
+                            
+                            <!-- Heater floating card badge -->
+                            <div class="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md p-3 rounded-xl shadow-lg border border-gray-100 flex items-center gap-3">
+                                <div class="bg-orange-500/10 p-2.5 rounded-lg text-orange-600">
+                                    <i class="fa-solid fa-radiator text-2xl"></i>
+                                </div>
+                                <div class="text-xs">
+                                    <span class="font-bold text-navy block text-sm">Calefacción digna</span>
+                                    <span class="text-gray-500">Para pasar el invierno</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Floating Yellow Tag / Post-it Note -->
+                        <div class="yellow-tag absolute -bottom-6 -left-4 sm:-left-8 px-6 py-3 rounded-lg z-30 shadow-2xl border border-yellow-300">
+                            <p class="handwritten text-2xl sm:text-3xl font-bold text-navy leading-none">
+                                Tu aporte hace la diferencia ♡
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: EL ORIGEN DE ESTA CAMPAÑA -->
+    <section id="campana" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Text Content -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-full bg-navy text-white flex items-center justify-center text-2xl shrink-0 shadow-md">
+                            <i class="fa-solid fa-school"></i>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-navy">
+                            El origen de esta campaña
+                        </h2>
+                    </div>
+
+                    <div class="space-y-4 text-textSecondary text-base sm:text-lg leading-relaxed">
+                        <p>
+                            Muchos colegios y liceos, especialmente en sectores más vulnerables, no cuentan con los fondos suficientes para cubrir necesidades básicas que permiten un entorno de aprendizaje digno y seguro. Ante esta realidad, directivos, profesores y apoderados han decidido organizar una recaudación de fondos para mejorar las condiciones de sus estudiantes.
+                        </p>
+                        <p class="font-bold text-navy text-lg pt-1">
+                            Porque una mejor educación no depende solo de las ganas, sino también de los recursos.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Visual Polaroid & Sticky Note -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center relative">
+                    <div class="relative max-w-sm w-full">
+                        <!-- Polaroid Frame Photo -->
+                        <div class="polaroid-frame bg-white p-4 pb-6 rounded-sm border border-gray-200">
+                            <div class="overflow-hidden rounded-xs aspect-4/3 mb-4 bg-gray-100">
+                                <img src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=700&q=80" 
+                                     alt="Edificio escolar" 
+                                     class="w-full h-full object-cover">
+                            </div>
+                            <div class="text-center">
+                                <span class="handwritten text-2xl sm:text-3xl font-extrabold text-navy tracking-wide">
+                                    EDUCACIÓN ES FUTURO ♡
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Handwritten sticky note beside polaroid -->
+                        <div class="yellow-sticky absolute -bottom-8 -right-2 sm:-right-6 p-4 rounded-md max-w-[210px] z-20 text-navy border border-yellow-300">
+                            <p class="handwritten text-xl sm:text-2xl font-bold leading-snug">
+                                No se trata solo de un colegio... se trata de nuestros niños, jóvenes y su futuro. ♡
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: ¿QUÉ NECESITAMOS? -->
+    <section id="necesidades" class="py-16 md:py-24 bg-sectionBg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Header -->
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-14 h-14 rounded-full bg-navy text-white flex items-center justify-center text-2xl shrink-0 shadow-md">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-navy">
+                        ¿Qué necesitamos?
+                    </h2>
+                    <p class="text-textSecondary text-base sm:text-lg mt-1">
+                        Las necesidades son muchas y variadas. Con tu aporte podremos cubrir:
+                    </p>
+                </div>
+            </div>
+
+            <!-- Cards Grid (5 items matching screenshot) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-10">
+                
+                <!-- Card 1: Calefactores -->
+                <div class="bg-cardBg rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between border border-gray-100 group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-fire-burner"></i>
+                        </div>
+                        <h3 class="font-extrabold text-navy text-lg mb-2">Calefactores</h3>
+                        <p class="text-textSecondary text-sm leading-snug mb-4">
+                            Para temperar las salas y evitar el frío en invierno.
+                        </p>
+                    </div>
+                    <div class="rounded-xl overflow-hidden h-36 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=400&q=80" 
+                             alt="Calefactor" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                </div>
+
+                <!-- Card 2: Mejor iluminación -->
+                <div class="bg-cardBg rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between border border-gray-100 group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-yellow-50 text-yellow-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <h3 class="font-extrabold text-navy text-lg mb-2">Mejor iluminación</h3>
+                        <p class="text-textSecondary text-sm leading-snug mb-4">
+                            Para un ambiente más seguro y cómodo para estudiar.
+                        </p>
+                    </div>
+                    <div class="rounded-xl overflow-hidden h-36 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" 
+                             alt="Iluminación sala" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                </div>
+
+                <!-- Card 3: Reparaciones y mantención -->
+                <div class="bg-cardBg rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between border border-gray-100 group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-wrench"></i>
+                        </div>
+                        <h3 class="font-extrabold text-navy text-lg mb-2">Reparaciones y mantención</h3>
+                        <p class="text-textSecondary text-sm leading-snug mb-4">
+                            De infraestructura, baños, techos y mobiliario.
+                        </p>
+                    </div>
+                    <div class="rounded-xl overflow-hidden h-36 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" 
+                             alt="Reparaciones" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                </div>
+
+                <!-- Card 4: Materiales educativos -->
+                <div class="bg-cardBg rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between border border-gray-100 group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <h3 class="font-extrabold text-navy text-lg mb-2">Materiales educativos</h3>
+                        <p class="text-textSecondary text-sm leading-snug mb-4">
+                            Libros, computadores y útiles escolares.
+                        </p>
+                    </div>
+                    <div class="rounded-xl overflow-hidden h-36 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=400&q=80" 
+                             alt="Materiales educativos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                </div>
+
+                <!-- Card 5: Conectividad -->
+                <div class="bg-cardBg rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between border border-gray-100 group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-wifi"></i>
+                        </div>
+                        <h3 class="font-extrabold text-navy text-lg mb-2">Conectividad</h3>
+                        <p class="text-textSecondary text-sm leading-snug mb-4">
+                            Para que todos los estudiantes tengan acceso a internet y tecnología.
+                        </p>
+                    </div>
+                    <div class="rounded-xl overflow-hidden h-36 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=400&q=80" 
+                             alt="Conectividad" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: EL IMPACTO DE TU APORTE & RECAUDACIÓN -->
+    <section id="como-ayudar" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                
+                <!-- Left Impact Bullet points -->
+                <div class="lg:col-span-5 space-y-6 flex flex-col justify-center">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-full bg-navy text-white flex items-center justify-center text-2xl shrink-0 shadow-md">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-navy">
+                                El impacto de tu aporte
+                            </h2>
+                            <p class="text-textSecondary font-medium">Con tu donación, ayudamos a:</p>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-4 pt-2">
+                        <li class="flex items-start gap-3">
+                            <span class="text-navy text-lg mt-0.5"><i class="fa-solid fa-check"></i></span>
+                            <span class="text-textSecondary text-base font-medium">Mejorar el bienestar y la salud de los estudiantes.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-navy text-lg mt-0.5"><i class="fa-solid fa-check"></i></span>
+                            <span class="text-textSecondary text-base font-medium">Crear espacios más seguros y acogedores.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-navy text-lg mt-0.5"><i class="fa-solid fa-check"></i></span>
+                            <span class="text-textSecondary text-base font-medium">Potenciar el aprendizaje y el rendimiento escolar.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-navy text-lg mt-0.5"><i class="fa-solid fa-check"></i></span>
+                            <span class="text-textSecondary text-base font-medium">Brindar igualdad de oportunidades, sin importar la situación económica de cada familia.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Middle Card: Progress & Objective Thermometer -->
+                <div class="lg:col-span-4 bg-sectionBg/70 border border-slate-200/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="fa-solid fa-temperature-half text-2xl text-navy"></i>
+                            <span class="text-navy font-bold text-lg">Nuestro objetivo</span>
+                        </div>
+
+                        <div class="text-3xl sm:text-4xl font-extrabold text-navy tracking-tight mb-2">
+                            $ 5.000.000
+                        </div>
+                        <p class="text-textSecondary text-sm mb-6">
+                            para cubrir las necesidades más urgentes de varios colegios y liceos.
+                        </p>
+
+                        <!-- Interactive Progress Bar -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-sm font-bold text-navy">
+                                <span>Progreso de campaña</span>
+                                <span id="progressPercentage">32%</span>
+                            </div>
+                            <div class="w-full h-5 bg-gray-200 rounded-full overflow-hidden p-0.5">
+                                <div id="progressBar" class="h-full bg-brandYellow rounded-full transition-all duration-700 ease-out" style="width: 32%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-8 border-t border-gray-200/60 mt-6">
+                        <span class="text-xs text-textSecondary uppercase font-bold tracking-wider block">Recaudado hasta ahora:</span>
+                        <div id="raisedAmountText" class="text-2xl sm:text-3xl font-extrabold text-navy mt-1">
+                            $ 1.600.000
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Yellow Card: "¡Tu aporte cuenta!" -->
+                <div class="lg:col-span-3 bg-brandYellow-light border border-brandYellow-soft rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-center items-center shadow-sm">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-full bg-brandYellow/40 text-navy flex items-center justify-center text-xl mx-auto">
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-navy">
+                            ¡Tu aporte cuenta!
+                        </h3>
+                        <p class="text-textSecondary text-sm leading-relaxed">
+                            No importa si es grande o pequeño, toda donación suma y nos acerca a un mejor futuro para cientos de estudiantes.
+                        </p>
+                    </div>
+
+                    <div class="w-full space-y-4 pt-6">
+                        <button onclick="openDonateModal()" class="w-full bg-brandYellow hover:bg-brandYellow-hover text-navy font-extrabold py-3.5 px-4 rounded-full text-base flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5">
+                            <i class="fa-solid fa-heart"></i>
+                            <span>Dona ahora</span>
+                        </button>
+
+                        <button onclick="openShareModal()" class="text-xs text-navy font-semibold hover:underline flex items-center justify-center gap-2 mx-auto">
+                            <i class="fa-solid fa-bullhorn text-sm"></i>
+                            <span>También puedes compartir esta campaña en tus redes sociales.</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BOTTOM HERO BANNER -->
+    <section class="relative bg-navy text-white overflow-hidden">
+        <!-- Sunset background image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1920&q=80" 
+                 alt="Jóvenes mirando al atardecer" 
+                 class="w-full h-full object-cover object-center opacity-35 mix-blend-luminosity">
+            <div class="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/70 to-navy/90"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                
+                <!-- Handwritten CTA text -->
+                <div class="text-center md:text-left">
+                    <h2 class="handwritten text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-wide">
+                        Juntos podemos <br class="hidden sm:inline">
+                        hacer la diferencia <span class="text-brandYellow">♡</span>
+                    </h2>
+                </div>
+
+                <!-- 4 Key Icon Highlights -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 text-center">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-brandYellow text-2xl mb-2 backdrop-blur-sm">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-200">Más<br>educación</span>
+                    </div>
+
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-brandYellow text-2xl mb-2 backdrop-blur-sm">
+                            <i class="fa-solid fa-fire-burner"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-200">Más<br>calor</span>
+                    </div>
+
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-brandYellow text-2xl mb-2 backdrop-blur-sm">
+                            <i class="fa-solid fa-people-holding-hands"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-200">Más<br>oportunidades</span>
+                    </div>
+
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-brandYellow text-2xl mb-2 backdrop-blur-sm">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-200">Un mejor<br>mañana</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contacto" class="bg-navy-dark text-white py-10 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-white/10">
+                
+                <!-- Logo Footer -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 flex items-center justify-center bg-white/10 rounded-xl">
+                        <i class="fa-solid fa-book-open-reader text-brandYellow text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-base block leading-tight">Juntos por Nuestros Colegios</span>
+                        <span class="text-xs text-gray-400">Pequeños aportes, grandes cambios</span>
+                    </div>
+                </div>
+
+                <!-- Quote -->
+                <p class="text-center text-xs sm:text-sm text-gray-300 italic max-w-md">
+                    "La educación es la llave que abre la puerta a un futuro mejor."
+                </p>
+
+                <!-- Social Icons & Hashtag -->
+                <div class="flex flex-col items-center md:items-end gap-2">
+                    <div class="flex items-center space-x-4 text-xl text-gray-300">
+                        <a href="#" onclick="openShareModal(); return false;" class="hover:text-brandYellow transition-colors" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" onclick="openShareModal(); return false;" class="hover:text-brandYellow transition-colors" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" onclick="openShareModal(); return false;" class="hover:text-brandYellow transition-colors" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                    <span class="text-xs font-bold text-brandYellow tracking-wider">#JuntosPorNuestrosColegios</span>
+                </div>
+
+            </div>
+
+            <div class="pt-6 text-center text-xs text-gray-400">
+                <p>© <span id="currentYear"></span> Juntos por Nuestros Colegios. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- DONATION MODAL -->
+    <div id="donateModal" class="fixed inset-0 bg-navy/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-gray-100 max-h-[90vh] overflow-y-auto">
+            <!-- Close Button -->
+            <button onclick="closeDonateModal()" class="absolute top-5 right-5 text-gray-400 hover:text-navy text-xl w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Content -->
+            <div id="donateStep1">
+                <div class="text-center mb-6">
+                    <div class="w-14 h-14 bg-brandYellow/30 text-navy rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-navy">Haz tu aportación</h3>
+                    <p class="text-xs text-textSecondary mt-1">Selecciona o ingresa el monto con el que deseas aportar.</p>
+                </div>
+
+                <!-- Preset Amounts -->
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                    <button type="button" onclick="selectAmount(5000, this)" class="amount-btn border-2 border-gray-200 rounded-xl py-3 text-sm font-bold text-navy hover:border-brandYellow transition-all">
+                        $ 5.000
+                    </button>
+                    <button type="button" onclick="selectAmount(10000, this)" class="amount-btn border-2 border-brandYellow bg-brandYellow/10 rounded-xl py-3 text-sm font-bold text-navy transition-all">
+                        $ 10.000
+                    </button>
+                    <button type="button" onclick="selectAmount(25000, this)" class="amount-btn border-2 border-gray-200 rounded-xl py-3 text-sm font-bold text-navy hover:border-brandYellow transition-all">
+                        $ 25.000
+                    </button>
+                </div>
+
+                <!-- Custom Amount Input -->
+                <div class="mb-5">
+                    <label class="block text-xs font-bold text-navy uppercase mb-1">Otro Monto ($ CLP)</label>
+                    <div class="relative">
+                        <span class="absolute left-3.5 top-3 text-gray-400 font-bold">$</span>
+                        <input type="number" id="customAmount" placeholder="10000" value="10000" class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-navy font-bold text-navy">
+                    </div>
+                </div>
+
+                <!-- Payment Method Mock -->
+                <div class="mb-6">
+                    <label class="block text-xs font-bold text-navy uppercase mb-2">Método de pago</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="border rounded-xl p-3 flex items-center gap-2 cursor-pointer border-navy bg-navy/5">
+                            <input type="radio" name="payment" checked class="accent-navy">
+                            <span class="text-xs font-bold text-navy"><i class="fa-solid fa-credit-card mr-1"></i> Tarjeta / Debito</span>
+                        </label>
+                        <label class="border rounded-xl p-3 flex items-center gap-2 cursor-pointer border-gray-200">
+                            <input type="radio" name="payment" class="accent-navy">
+                            <span class="text-xs font-bold text-navy"><i class="fa-solid fa-building-columns mr-1"></i> Transferencia</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button onclick="processDonation()" class="w-full bg-brandYellow hover:bg-brandYellow-hover text-navy font-extrabold py-3.5 rounded-full text-base shadow-lg transition-all flex items-center justify-center gap-2">
+                    <span>Confirmar Donación</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Donation Success State -->
+            <div id="donateSuccess" class="hidden text-center py-6">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h3 class="text-2xl font-extrabold text-navy mb-2">¡Muchas Gracias!</h3>
+                <p class="text-sm text-textSecondary mb-4">
+                    Tu aporte de <strong id="donatedAmountDisplay" class="text-navy font-extrabold"></strong> ha sido recibido con éxito.
+                </p>
+                <p class="text-xs text-gray-500 mb-6">
+                    Hemos actualizado la barra de metas de la campaña.
+                </p>
+                <button onclick="closeDonateModal()" class="bg-navy text-white font-bold py-3 px-8 rounded-full text-sm">
+                    Volver a la página
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHARE MODAL -->
+    <div id="shareModal" class="fixed inset-0 bg-navy/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl relative border border-gray-100 text-center">
+            <button onclick="closeShareModal()" class="absolute top-5 right-5 text-gray-400 hover:text-navy text-xl w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                <i class="fa-solid fa-share-nodes"></i>
+            </div>
+            <h3 class="text-2xl font-extrabold text-navy mb-1">Comparte esta campaña</h3>
+            <p class="text-xs text-textSecondary mb-6">Ayúdanos a llegar a más personas difundiendo la causa.</p>
+
+            <!-- Social Links -->
+            <div class="grid grid-cols-4 gap-3 mb-6">
+                <button onclick="simulateShare('WhatsApp')" class="flex flex-col items-center gap-1 text-emerald-600 hover:opacity-80">
+                    <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-xl"><i class="fa-brands fa-whatsapp"></i></div>
+                    <span class="text-[10px] font-bold text-navy">WhatsApp</span>
+                </button>
+                <button onclick="simulateShare('Facebook')" class="flex flex-col items-center gap-1 text-blue-600 hover:opacity-80">
+                    <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-xl"><i class="fa-brands fa-facebook-f"></i></div>
+                    <span class="text-[10px] font-bold text-navy">Facebook</span>
+                </button>
+                <button onclick="simulateShare('X (Twitter)')" class="flex flex-col items-center gap-1 text-gray-800 hover:opacity-80">
+                    <div class="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-xl"><i class="fa-brands fa-x-twitter"></i></div>
+                    <span class="text-[10px] font-bold text-navy">X</span>
+                </button>
+                <button onclick="copyShareLink()" class="flex flex-col items-center gap-1 text-navy hover:opacity-80">
+                    <div class="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-xl"><i class="fa-solid fa-link"></i></div>
+                    <span class="text-[10px] font-bold text-navy">Copiar</span>
+                </button>
+            </div>
+
+            <div id="copyAlert" class="hidden text-xs bg-emerald-50 text-emerald-700 py-2 rounded-lg font-bold">
+                <i class="fa-solid fa-check mr-1"></i> ¡Enlace copiado al portapapeles!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // State for donation system
+        let currentRaised = 1600000;
+        const targetGoal = 5000000;
+        let selectedDonationAmount = 10000;
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.className = 'fa-solid fa-bars text-xl';
+            } else {
+                icon.className = 'fa-solid fa-xmark text-xl';
+            }
+        }
+
+        // Modal Helpers
+        function openDonateModal() {
+            document.getElementById('donateModal').classList.remove('hidden');
+            document.getElementById('donateStep1').classList.remove('hidden');
+            document.getElementById('donateSuccess').classList.add('hidden');
+        }
+
+        function closeDonateModal() {
+            document.getElementById('donateModal').classList.add('hidden');
+        }
+
+        function openShareModal() {
+            document.getElementById('shareModal').classList.remove('hidden');
+            document.getElementById('copyAlert').classList.add('hidden');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.add('hidden');
+        }
+
+        // Amount Selector
+        function selectAmount(amount, buttonEl) {
+            selectedDonationAmount = amount;
+            document.getElementById('customAmount').value = amount;
+            
+            // Highlight selected button
+            document.querySelectorAll('.amount-btn').forEach(btn => {
+                btn.classList.remove('border-brandYellow', 'bg-brandYellow/10');
+                btn.classList.add('border-gray-200');
+            });
+            buttonEl.classList.remove('border-gray-200');
+            buttonEl.classList.add('border-brandYellow', 'bg-brandYellow/10');
+        }
+
+        // Synchronize custom input
+        document.getElementById('customAmount').addEventListener('input', function(e) {
+            selectedDonationAmount = parseInt(e.target.value) || 0;
+            document.querySelectorAll('.amount-btn').forEach(btn => {
+                btn.classList.remove('border-brandYellow', 'bg-brandYellow/10');
+                btn.classList.add('border-gray-200');
+            });
+        });
+
+        // Format currency helper
+        function formatCurrency(amount) {
+            return '$ ' + amount.toLocaleString('es-CL');
+        }
+
+        // Process Donation Simulation
+        function processDonation() {
+            const amountInput = parseInt(document.getElementById('customAmount').value);
+            if (!amountInput || amountInput < 500) {
+                alert('Por favor ingresa un monto válido igual o mayor a $500.');
+                return;
+            }
+
+            // Update campaign values
+            currentRaised += amountInput;
+            const newPercentage = Math.min(Math.round((currentRaised / targetGoal) * 100), 100);
+
+            // Update UI
+            document.getElementById('raisedAmountText').textContent = formatCurrency(currentRaised);
+            document.getElementById('progressBar').style.width = newPercentage + '%';
+            document.getElementById('progressPercentage').textContent = newPercentage + '%';
+            document.getElementById('donatedAmountDisplay').textContent = formatCurrency(amountInput);
+
+            // Show Success Screen
+            document.getElementById('donateStep1').classList.add('hidden');
+            document.getElementById('donateSuccess').classList.remove('hidden');
+        }
+
+        // Share Link helper
+        function copyShareLink() {
+            const tempInput = document.createElement("input");
+            tempInput.value = window.location.href;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            const alertBox = document.getElementById('copyAlert');
+            alertBox.classList.remove('hidden');
+            setTimeout(() => {
+                alertBox.classList.add('hidden');
+            }, 3000);
+        }
+
+        function simulateShare(platform) {
+            const alertBox = document.getElementById('copyAlert');
+            alertBox.textContent = `¡Compartiendo en ${platform}!`;
+            alertBox.classList.remove('hidden');
+            setTimeout(() => {
+                alertBox.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
